@@ -29,7 +29,10 @@ plot.NDVI(dat)
 
 Q1: This plot suggests that Fynbos greenness (NDVI) as observed from satellite saturates with time since fire. Why do you think it saturates rather than increasing linearly with time?
 
->*Answer 1:*
+>*Answer 1:*  
+There is only a limited amount of land space available for plants to cover, therefore there is a hard limit to how much NDVI there can be. When the land available is fully covered by "greenness" there can be no further NDVI increase.  
+Within the actual systems there are also limiting factors such as nutrient, sunlight, and water availability, competition, and herbivorous animals.  
+These reasons explain why NDVI growth starts out rapidly and then slows down over time as both the available space starts becoming saturated, and the limiting factors make it increasingly more difficult for further growth to happen.
 <br>
 
 ### 2. Fit models using Non-linear Least Squares (NLS)
@@ -88,7 +91,11 @@ Lots more parameters...
 
 Q2: How do the estimates for the common parameters compare?
 
->*Answer 2:*
+>*Answer 2:*  
+All parameters were given the same starting values for the simple and the full model.  
+The estimate for the "alpha" parameter decreased marginally by 0.04 in the full model. The estimate for parameter significance also did not change by much between the models.  
+The estimate for the "gamma" parameter increased marginally by 0.04 in the full model. The estimate for parameter significance also did not change by much between the models.  
+The estimate for the "lambda" parameter decreased noticeably by 0.19 in the full model. The estimate for parameter significance also changed greatly between models. With the t value for the parameter increasing from 5.500 (Pr(>|t|) = 1.84e-07) in the simple model to 7.846 (Pr(>|t|) = 1.25e-12) in the full model.
 <br>
 
 ### 3. Compare NLS models using ANOVA
@@ -105,10 +112,16 @@ anova(fit_negexp, fit_negexpS)
 
 Q3: Which model is better?
 
->*Answer 3:*
+>*Answer 3:*  
+The full model is better than the simple model. This can be seen from the fact that the full model has a lower residual sum of squares, with a very large associated F-statistic of 39.207 (Pr(>F) = 4.12e-14).
+<br>
+
 Q4: How many degrees of freedom are there in this ANOVA and why (i.e. what are they)?
 
->*Answer 4:*
+>*Answer 4:* 
+This ANOVA has 2 numerator degrees of freedom which come from the fact that the simple model has 3 parameters and the full model has 5, resulting in a difference of 2 between the models.  
+The simple model has 135 residual (denominator) degrees of freedom. Adding the 3 parameters onto that results in the simple model having 138 total degrees of freedom.  
+The full model has 133 residual degrees of freedom. Adding the 5 parameters onto that results in the simple model having 138 total degrees of freedom.
 <br>
 
 ### 4. Fit models using Maximum Likelihood Estimation (MLE)
@@ -190,7 +203,8 @@ AIC_simple - AIC_full
 
 Q5: Is there a preferred model and if so, which one?
 
->*Answer 5:*
+>*Answer 5:*  
+The full model is preferred to the simple one since the full model has a much lower AIC than the simple model.
 <br>
 
 The nice thing about AIC is that the models you compare do not have to be nested like they do for ANOVA, as long as the data are the same. There are a few other constraints however... 
@@ -207,5 +221,7 @@ You'll notice that these are completely different to the AICs for the MLE models
 
 Q6: Why is it not okay to compare the AIC of these NLS models with the AIC of the MLE models? Hint: type `?AIC` into the R console and do some reading.
 
->*Answer 6:*
+>*Answer 6:*  
+Although the AIC function in R can be used for many types of models, the theory of AIC itself requires that the log-likelihoods have been maximised.  
+Therefore, even though we can get AIC values for the models fitted with non-linear least squares (i.e. not fitted with maximum likelihood estimation), it would not be applicable to use these AIC values in comparison to MLE fitted models, since they go against the base requirement of the AIC method and therefore could give unreliable results.
 <br>
